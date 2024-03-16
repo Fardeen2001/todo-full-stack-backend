@@ -25,4 +25,4 @@ jobs:
       - name: Pull image from docker hub
         run: docker pull fardeen2001/todo-fullstack-backend:latest
       - name: Run Docker Container
-        run: docker run -d -p 4000:4000 --name nodejs-app-container -e MONGO_URI=`${{ secrets.MONGO_URI }}` PORT=`${{ secrets.PORT }}` fardeen2001/todo-fullstack-backend
+        run: docker run -d -p 4000:4000 --name nodejs-app-container -e MONGO_URI=`${{ secrets.MONGO_URI }}` fardeen2001/todo-fullstack-backend
