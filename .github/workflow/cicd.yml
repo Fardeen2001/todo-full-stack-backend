@@ -1,0 +1,28 @@
+name: Deploy Node Application
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source
+        uses: action/checkout@v4
+      - name: Login to docker hub
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+      - name: Build Docker Image
+        run: docker build -t fardeen2001/todo-fullstack-backend .
+      - name: Publish Image to docker hub
+        run: docker push fardeen2001/todo-fullstack-backend:latest
+
+  deploy:
+    needs: build
+    runs-on: self-hosted
+    steps:
+      - name: Pull image from docker hub
+        run: docker pull fardeen2001/todo-fullstack-backend:latest
+      - name: Run Docker Container
+        run: docker run -d -p 4000:4000 --name nodejs-app-container -e MONGO_URI=`${{ secrets.MONGO_URI }}` PORT=`${{ secrets.PORT }}` fardeen2001/todo-fullstack-backend
