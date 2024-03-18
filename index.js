@@ -7,7 +7,7 @@ const app = express();
 const PORT = 8000;
 app.use(
   cors({
-    origin: "http://localhost:80",
+    origin: "http://localhost:3000",
     methods: ["POST", "GET", "DELETE", "PUT"],
     credentials: true,
   })
